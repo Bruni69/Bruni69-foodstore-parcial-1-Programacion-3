@@ -10,6 +10,10 @@ const cargarCarrito = () => {
 
     if (!contenedor || !totalElemento || !mensajeVacio) return;
 
+    mensajeVacio.style.display = 'none';
+    contenedor.innerHTML = '';
+    totalElemento.innerHTML = '';
+
     if (carrito.length === 0) {
         mensajeVacio.style.display = 'block';
         return;
@@ -24,12 +28,34 @@ const cargarCarrito = () => {
             <p>Precio: $${Number(item.precio).toFixed(2)}</p>
             <p>Cantidad: ${item.cantidad}</p>
             <p>Subtotal: $${(Number(item.precio) * item.cantidad).toFixed(2)}</p>
+            <button type="button" onclick="eliminarDelCarrito(${item.id})">Eliminar</button>
         `;
         contenedor.appendChild(article);
         total += Number(item.precio) * item.cantidad;
     });
 
     totalElemento.innerHTML = `Total: $${total.toFixed(2)}`;
+};
+
+(window as any).eliminarDelCarrito = (id: number) => {
+    const carritoGuardado = localStorage.getItem('carrito');
+    const carrito: CartItem[] = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    
+    const itemExistente = carrito.find(item => item.id === id);
+    
+    if (itemExistente) {
+        if (itemExistente.cantidad > 1) {
+            itemExistente.cantidad--;
+        } else {
+            const carritoActualizado = carrito.filter(item => item.id !== id);
+            localStorage.setItem('carrito', JSON.stringify(carritoActualizado));
+            cargarCarrito();
+            return;
+        }
+    }
+    
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    cargarCarrito();
 };
 
 cargarCarrito();
