@@ -1,7 +1,7 @@
-import { productos, categorias } from "../../../data/data";
+import { PRODUCTS, getCategories } from "../../../data/data";
 import type { CartItem, IProduct } from "../../../types/product";
 
-const cargarProductos = (lista: IProduct[] = productos) => {
+const cargarProductos = (lista: IProduct[] = PRODUCTS) => {
     const contenedor = document.getElementById('productos-destacados');
     if (!contenedor) return;
 
@@ -23,13 +23,15 @@ const cargarCategorias = () => {
     const listaCategorias = document.getElementById('lista-categorias');
     if (!listaCategorias) return;
 
-    categorias.forEach(categoria => {
+    getCategories().forEach(categorias => {
         const li = document.createElement('li');
-        li.innerHTML = `<a href="#">${categoria}</a>`;
+        li.innerHTML = `<a href="#">${categorias.nombre}</a>`;
 
         li.addEventListener('click', (e) => {
             e.preventDefault();
-            const productosFiltrados = productos.filter(p => p.categoria === categoria);
+            const productosFiltrados = PRODUCTS.filter(p => 
+    p.categorias.some(c => c.nombre === categorias.nombre)
+);
             const contenedor = document.getElementById('productos-destacados');
             if (contenedor) contenedor.innerHTML = '';
             cargarProductos(productosFiltrados);
@@ -43,7 +45,7 @@ const inputBuscar = document.getElementById('Buscar') as HTMLInputElement;
 if (inputBuscar) {
     inputBuscar.addEventListener('input', () => {
         const textoBusqueda = inputBuscar.value.toLowerCase();
-        const productosFiltrados = productos.filter(producto =>
+        const productosFiltrados = PRODUCTS.filter(producto =>
             producto.nombre.toLowerCase().includes(textoBusqueda)
         );
         const contenedor = document.getElementById('productos-destacados');
