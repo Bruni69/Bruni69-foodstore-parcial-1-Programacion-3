@@ -1,0 +1,295 @@
+/* Reset y base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #1a1a1a;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    color: #ff6b35;
+    font-size: 1.8rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff6b35;
+}
+
+/* Layout */
+body {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+}
+
+aside {
+    background-color: white;
+    padding: 20px;
+    width: 220px;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+aside h3 {
+    color: #ff6b35;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside ul li {
+    margin-bottom: 10px;
+}
+
+aside ul li a {
+    color: #333;
+    text-decoration: none;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+aside ul li a:hover {
+    background-color: #ff6b35;
+    color: white;
+}
+
+/* Botón Todos */
+#Todos {
+    margin-top: 15px;
+    width: 100%;
+    padding: 8px;
+    background-color: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#Todos:hover {
+    background-color: #ff6b35;
+}
+
+/* Main */
+main {
+    margin-left: 240px;
+    padding: 30px;
+}
+
+/* Buscador */
+main section:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+#Buscar {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 300px;
+    transition: border 0.3s;
+}
+
+#Buscar:focus {
+    outline: none;
+    border-color: #ff6b35;
+}
+
+/* Productos */
+#productos-destacados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+#productos-destacados article {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+#productos-destacados article:hover {
+    transform: translateY(-5px);
+}
+
+#productos-destacados article img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+#productos-destacados article h3 {
+    margin-bottom: 8px;
+    color: #1a1a1a;
+}
+
+#productos-destacados article p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+/* Botones */
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+#productos-destacados article button {
+    background-color: #ff6b35;
+    color: white;
+    width: 100%;
+    margin-top: 8px;
+}
+
+#productos-destacados article button:hover {
+    background-color: #e55a28;
+}
+
+/* Footer */
+footer {
+    background-color: #1a1a1a;
+    color: #aaa;
+    text-align: center;
+    padding: 15px;
+    margin-left: 240px;
+}
+ /*para pantallas chicas*/
+@media (max-width: 768px) {
+    aside {
+        position: static;
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        border-bottom: 2px solid #ff6b35;
+    }
+
+    aside ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    aside ul li a {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+
+    #Todos {
+        width: auto;
+        margin-top: 0;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    footer {
+        margin-left: 0;
+    }
+
+    #productos-destacados {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+/*estilo de los botones*/
+    .btn-cantidad {
+        background-color: #ff6b35;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .btn-cantidad:hover {
+        background-color: #1a1a1a;
+    }
+    .btn-cantidad:active {
+        background-color: #333;
+    }
+    #btn-vaciar {
+    background-color: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+    margin-bottom: 20px;
+}
+
+#btn-vaciar:hover {
+    background-color: #922b21;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}

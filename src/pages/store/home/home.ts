@@ -8,12 +8,11 @@ const cargarProductos = (lista: IProduct[] = PRODUCTS) => {
     lista.forEach(producto => {
         const article = document.createElement('article');
         article.innerHTML = `
-            <img src="${producto.imagen}" width="150" alt="${producto.nombre}">
+           <img src="/assets/${producto.imagen}" alt="${producto.nombre}">
             <h3><strong>${producto.nombre}</strong></h3>
             <p>${producto.descripcion}</p>
             <p>Precio: <strong>$${producto.precio.toFixed(2)}</strong></p>
-            <button type="button">Ver Detalles</button>
-            <button type="button" onclick="agregarAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+            <button type="button" onclick="agregarAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio}, ${producto.stock}, this)">Agregar al Carrito</button>
         `;
         contenedor.appendChild(article);
     });
@@ -68,12 +67,31 @@ if (btnTodos) {
     });
 }
 
-(window as any).agregarAlCarrito = (id: number, nombre: string, precio: number) => {
+(window as any).agregarAlCarrito = (id: number, nombre: string, precio: number, stock: number, btn: HTMLButtonElement) => {
+    
+    // 1. Verificar stock primero
+    if (stock === 0) {
+        btn.style.backgroundColor = '#c0392b';
+        btn.textContent = '✗ Sin stock';
+        setTimeout(() => {
+            btn.style.backgroundColor = '';
+            btn.textContent = 'Agregar al Carrito';
+        }, 1000);
+        return;
+    }
+
+    // 2. Leer carrito con manejo de errores
     const carritoGuardado = localStorage.getItem('carrito');
-    const carrito: CartItem[] = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    let carrito: CartItem[] = [];
+    try {
+        carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    } catch (error) {
+        console.error('Error al leer el carrito:', error);
+        localStorage.removeItem('carrito');
+    }
 
+    // 3. Agregar o actualizar
     const itemExistente = carrito.find(item => item.id === id);
-
     if (itemExistente) {
         itemExistente.cantidad++;
     } else {
@@ -81,8 +99,15 @@ if (btnTodos) {
     }
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
-    alert(`"${nombre}" agregado al carrito`);
-};
+
+    // 4. Feedback visual
+    btn.style.backgroundColor = '#27ae60';
+    btn.textContent = '✓ Agregado';
+    setTimeout(() => {
+        btn.style.backgroundColor = '';
+        btn.textContent = 'Agregar al Carrito';
+    }, 1000);
+};;
 
 cargarCategorias();
 cargarProductos();

@@ -6,8 +6,7 @@
 
 ## Descripción
 
-Food Store es una aplicación frontend de comercio de comidas desarrollada con HTML, CSS, TypeScript y Vite.
-Permite visualizar un catálogo de productos, buscarlos, filtrarlos por categoría y agregarlos a un carrito de compras con persistencia en localStorage.
+Food Store es una aplicación frontend de comercio de comidas desarrollada con HTML, CSS, TypeScript y Vite. Permite visualizar un catálogo de productos, buscarlos, filtrarlos por categoría y agregarlos a un carrito de compras con persistencia en localStorage.
 
 ## Funcionalidades
 
@@ -17,6 +16,8 @@ Permite visualizar un catálogo de productos, buscarlos, filtrarlos por categor�
 - Carrito de compras con persistencia en localStorage
 - Visualización del carrito con nombre, precio, cantidad y subtotal
 - Cálculo del total de la compra
+- Manejo de productos sin stock
+- Diseño responsive
 
 ## Tecnologías utilizadas
 
@@ -27,14 +28,21 @@ Permite visualizar un catálogo de productos, buscarlos, filtrarlos por categor�
 
 ## Instrucciones para ejecutar
 
-1. Clonar el repositorio:
-git clone https://github.com/Bruni69/Bruni69-foodstore-parcial-1-Programacion-3.git
-  
-2. Instalar dependencias:
+1. Descomprimí el archivo zip
+
+2. Abrí una terminal dentro de la carpeta `proteger_rutas`
+
+3. Si no tenés pnpm instalado, instalalo con:
+npm install -g pnpm
+
+4. Instalá las dependencias del proyecto:
 pnpm install
+Este paso descarga todas las herramientas necesarias para que el proyecto funcione, incluyendo Vite y TypeScript. Se crea automáticamente la carpeta `node_modules`.
 
-3. Levantar el servidor de desarrollo:
+5. Levantá el servidor de desarrollo:
 pnpm dev
+Este comando inicia Vite, que compila el TypeScript y levanta un servidor local.
 
-4. Abrir en el navegador:
-http://localhost:5173/src/pages/store/home/home.html
+6. Abrí el navegador en:
+http://localhost:5173
+La aplicación redirige automáticamente al catálogo de productos.
