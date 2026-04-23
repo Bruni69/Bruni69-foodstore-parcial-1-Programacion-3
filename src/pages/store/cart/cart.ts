@@ -1,11 +1,5 @@
 import type { CartItem } from "../../../types/product";
-const btnVaciar = document.getElementById('btn-vaciar');
-if (btnVaciar) {
-    btnVaciar.addEventListener('click', () => {
-        localStorage.removeItem('carrito');
-        cargarCarrito();
-    });
-}
+
 const cargarCarrito = () => {
     const carritoGuardado = localStorage.getItem('carrito');
     let carrito: CartItem[] = [];
@@ -16,9 +10,9 @@ try {
     localStorage.removeItem('carrito');
 }
 
-    const mensajeVacio = document.getElementById('carrito-vacio');
-    const contenedor = document.getElementById('lista-carrito');
-    const totalElemento = document.getElementById('total-carrito');
+    const mensajeVacio = document.querySelector<HTMLElement>('#carrito-vacio');
+    const contenedor = document.querySelector<HTMLElement>('#lista-carrito');
+    const totalElemento = document.querySelector<HTMLElement>('#total-carrito');
 
     if (!contenedor || !totalElemento || !mensajeVacio) return;
 
@@ -39,9 +33,9 @@ try {
             <h3>${item.nombre}</h3>
             <p>Precio: $${Number(item.precio).toFixed(2)}</p>
             <div style="display:flex; align-items:center; gap:10px;">
-            <button type="button" class="btn-cantidad" aria-label="Quitar uno" onclick="eliminarDelCarrito(${item.id})">−</button>
+            <button type="button" class="btn-cantidad" aria-label="Quitar uno" data-accion="quitar" data-id="${item.id}">−</button>
             <span aria-label="Cantidad">${item.cantidad}</span>
-            <button type="button" class="btn-cantidad" aria-label="Agregar uno" onclick="agregarUno(${item.id})">+</button>
+            <button type="button" class="btn-cantidad" aria-label="Agregar uno" data-accion="sumar" data-id="${item.id}">+</button>
             </div>
             <p>Subtotal: $${(Number(item.precio) * item.cantidad).toFixed(2)}</p>
         `;
@@ -51,49 +45,59 @@ try {
 
     totalElemento.innerHTML = `Total: $${total.toFixed(2)}`;
 };
+const contenedorCarrito = document.querySelector<HTMLElement>('#lista-carrito');
+if (contenedorCarrito) {
+    contenedorCarrito.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as HTMLButtonElement;
+        const id = Number(target.dataset.id);
 
-(window as any).eliminarDelCarrito = (id: number) => {
-    const carritoGuardado = localStorage.getItem('carrito');
-    let carrito: CartItem[] = [];
-try {
-    carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
-} catch (error) {
-    console.error('Error al leer el carrito:', error);
-    localStorage.removeItem('carrito');
-}
-    
-    const itemExistente = carrito.find(item => item.id === id);
-    
-    if (itemExistente) {
-        if (itemExistente.cantidad > 1) {
-            itemExistente.cantidad--;
-        } else {
-            const carritoActualizado = carrito.filter(item => item.id !== id);
-            localStorage.setItem('carrito', JSON.stringify(carritoActualizado));
+        if (target.dataset.accion === 'quitar') {
+            const carritoGuardado = localStorage.getItem('carrito');
+            let carrito: CartItem[] = [];
+            try {
+                carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+            } catch (error) {
+                console.error('Error al leer el carrito:', error);
+                localStorage.removeItem('carrito');
+            }
+
+            const itemExistente = carrito.find(item => item.id === id);
+            if (itemExistente) {
+                if (itemExistente.cantidad > 1) {
+                    itemExistente.cantidad--;
+                } else {
+                    const carritoActualizado = carrito.filter(item => item.id !== id);
+                    localStorage.setItem('carrito', JSON.stringify(carritoActualizado));
+                    cargarCarrito();
+                    return;
+                }
+            }
+            localStorage.setItem('carrito', JSON.stringify(carrito));
             cargarCarrito();
-            return;
         }
-    }
-    
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    cargarCarrito();
-};
 
-(window as any).agregarUno = (id: number) => {
-    const carritoGuardado = localStorage.getItem('carrito');
-    let carrito: CartItem[] = [];
-try {
-    carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
-} catch (error) {
-    console.error('Error al leer el carrito:', error);
-    localStorage.removeItem('carrito');
+        if (target.dataset.accion === 'sumar') {
+            const carritoGuardado = localStorage.getItem('carrito');
+            let carrito: CartItem[] = [];
+            try {
+                carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+            } catch (error) {
+                console.error('Error al leer el carrito:', error);
+                localStorage.removeItem('carrito');
+            }
+
+            const item = carrito.find(item => item.id === id);
+            if (item) item.cantidad++;
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            cargarCarrito();
+        }
+    });
 }
-    
-    const item = carrito.find(item => item.id === id);
-    if (item) item.cantidad++;
-    
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    cargarCarrito();
-};
-
+const btnVaciar = document.querySelector<HTMLButtonElement>('#btn-vaciar');
+if (btnVaciar) {
+    btnVaciar.addEventListener('click', () => {
+        localStorage.removeItem('carrito');
+        cargarCarrito();
+    });
+}
 cargarCarrito();

@@ -1,7 +1,7 @@
 export interface ICategory {
-    id: number,
+    readonly id: number,
     eliminado: boolean,
-    createdAt: string,
+    readonly createdAt: string,
     nombre: string,
     descripcion: string
 }
