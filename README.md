@@ -30,16 +30,14 @@ Food Store es una aplicación frontend de comercio de comidas desarrollada con H
 
 1. Descomprimí el archivo zip
 
-2. Abrí una terminal dentro de la carpeta `proteger_rutas`
-
-3. Si no tenés pnpm instalado, instalalo con:
+2. Si no tenés pnpm instalado, instalalo con:
 npm install -g pnpm
 
-4. Instalá las dependencias del proyecto:
+3. Instalá las dependencias del proyecto:
 pnpm install
 Este paso descarga todas las herramientas necesarias para que el proyecto funcione, incluyendo Vite y TypeScript. Se crea automáticamente la carpeta `node_modules`.
 
-5. Levantá el servidor de desarrollo:
+4. Levantá el servidor de desarrollo:
 pnpm dev
 Este comando inicia Vite, que compila el TypeScript y levanta un servidor local.
 
